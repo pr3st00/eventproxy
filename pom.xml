@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.fernandoalmeida</groupId>
-	<artifactId>ifttproxy</artifactId>
+	<artifactId>eventproxy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ifttproxy</name>
-	<description>IFTT Proxy</description>
+	<name>eventproxy</name>
+	<description>Event Proxy</description>
 
 	<properties>
 		<java.version>1.8</java.version>

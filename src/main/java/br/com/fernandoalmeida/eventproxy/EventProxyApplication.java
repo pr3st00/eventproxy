@@ -1,13 +1,13 @@
-package br.com.fernandoalmeida.ifttproxy;
+package br.com.fernandoalmeida.eventproxy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IfttProxyApplication
+public class EventProxyApplication
 {
 	public static void main(String[] args)
 	{
-		SpringApplication.run(IfttProxyApplication.class, args);
+		SpringApplication.run(EventProxyApplication.class, args);
 	}
 }
