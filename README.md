@@ -1,2 +1,2 @@
-# iftttproxy
-IFTTT Proxy
+# eventproxy
+Event Proxy
