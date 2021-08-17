@@ -41,9 +41,9 @@ public class EventRestController
 	 * @param delay
 	 */
 	@GetMapping(value = "/callGenericUrl")
-	public void callGenericUrl(@RequestParam("delay") Optional<Long> delay)
+	public void callGenericUrl(@RequestParam("key") String key, @RequestParam("delay") Optional<Long> delay)
 	{
-		caller.callWithDelay(config.getGenericUrl(), delay.isPresent() ? delay.get() : config.getDefaultDelay());
+		caller.callWithDelay(config.getUrlByKey(key), delay.isPresent() ? delay.get() : config.getDefaultDelay());
 	}
 
 	/**
