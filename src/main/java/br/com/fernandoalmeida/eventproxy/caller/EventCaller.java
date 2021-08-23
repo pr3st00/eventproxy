@@ -4,10 +4,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Calls an event on IFTTT with a pre-determined delay.
@@ -15,10 +15,9 @@ import org.springframework.web.client.RestTemplate;
  * @author falmeida
  */
 @Component
+@Slf4j
 public class EventCaller
 {
-	private final Logger logger = LoggerFactory.getLogger(EventCaller.class);
-
 	/**
 	 * Calls an url
 	 * 
@@ -28,7 +27,7 @@ public class EventCaller
 	private void call(String url)
 	{
 		String response = new RestTemplate().getForObject(url, String.class);
-		logger.info("Response is [{}].", response);
+		log.info("Response is [{}].", response);
 	}
 
 	/**
@@ -44,7 +43,7 @@ public class EventCaller
 
 		Runnable task = () -> new EventCaller().call(url);
 		
-		logger.info("Scheduling a call to url [{}]" + " after [{}] second(s).", url, delay);
+		log.info("Scheduling a call to url [{}]" + " after [{}] second(s).", url, delay);
 
 		executorService.schedule(task, delay, TimeUnit.SECONDS);
 	}
