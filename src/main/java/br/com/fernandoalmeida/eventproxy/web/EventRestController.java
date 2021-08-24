@@ -27,10 +27,10 @@ public class EventRestController
 
 	/**
 	 * Calls an event on IFTTT with a delay
-	 * 
-	 * @param eventName
-	 * @param key
-	 * @param delay
+	 *
+	 * @param eventName String eventName
+	 * @param key String key
+	 * @param delay Delay in seconds
 	 */
 	@GetMapping(value = "/callIfttEvent")
 	public void callIftttEvent(@RequestParam("event") @NotBlank String eventName, @RequestParam("key") @NotBlank String key,
@@ -41,10 +41,9 @@ public class EventRestController
 
 	/**
 	 * Calls a generic url with a delay
-	 * 
-	 * @param eventName
-	 * @param key
-	 * @param delay
+	 *
+	 * @param key String key
+	 * @param delay Delay in seconds
 	 */
 	@GetMapping(value = "/callEvent")
 	public void callEvent(@RequestParam("key") @NotBlank String key, @RequestParam("delay") Optional<Long> delay)
@@ -64,8 +63,8 @@ public class EventRestController
 	 * Builds an ifttt url for an <code> eventName </code> and key
 	 * <code> key </code>
 	 * 
-	 * @param eventName
-	 * @param key
+	 * @param eventName String eventName
+	 * @param key String key
 	 * @return
 	 */
 	private String getEventUrl(String eventName, String key)

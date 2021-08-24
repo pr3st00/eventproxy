@@ -20,9 +20,8 @@ public class EventCaller
 {
 	/**
 	 * Calls an url
-	 * 
-	 * @param eventName
-	 * @param key
+	 *
+	 * @param url Url
 	 */
 	private void call(String url)
 	{
@@ -32,10 +31,9 @@ public class EventCaller
 
 	/**
 	 * Calls an url with a delay.
-	 * 
-	 * @param eventName
-	 * @param key
-	 * @param delay
+	 *
+	 * @param url Url
+	 * @param delay Delay in seconds
 	 */
 	public void callWithDelay(String url, Long delay)
 	{
