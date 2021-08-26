@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fernandoalmeida.eventproxy.caller.EventCaller;
 import br.com.fernandoalmeida.eventproxy.caller.Request;
+import br.com.fernandoalmeida.eventproxy.caller.Status;
 import br.com.fernandoalmeida.eventproxy.config.ApplicationConfig;
 
 @RestController
@@ -33,10 +34,12 @@ public class EventRestController
 	 * @param delay Delay in seconds
 	 */
 	@GetMapping(value = "/callIfttEvent")
-	public void callIftttEvent(@RequestParam("event") @NotBlank String eventName, @RequestParam("key") @NotBlank String key,
+	public Status callIftttEvent(@RequestParam("event") @NotBlank String eventName, @RequestParam("key") @NotBlank String key,
 			@RequestParam("delay") Optional<Long> delay)
 	{
 		caller.callWithDelay(getEventUrl(eventName, key), delay.isPresent() ? delay.get() : config.getDefaultDelay());
+		
+		return Status.scheduled();
 	}
 
 	/**
@@ -46,17 +49,21 @@ public class EventRestController
 	 * @param delay Delay in seconds
 	 */
 	@GetMapping(value = "/callEvent")
-	public void callEvent(@RequestParam("key") @NotBlank String key, @RequestParam("delay") Optional<Long> delay)
+	public Status callEvent(@RequestParam("key") @NotBlank String key, @RequestParam("delay") Optional<Long> delay)
 	{
 		caller.callWithDelay(config.getUrlByKey(key), delay.isPresent() ? delay.get() : config.getDefaultDelay());
+		
+		return Status.scheduled();
 	}
 	
 	@PostMapping(value = "/callEvent")
-	public void callEvent(@RequestBody @Valid Request request)
+	public Status callEvent(@RequestBody @Valid Request request)
 	{
 	    Optional<Integer> delay = request.getDelay();
 	    
 	    caller.callWithDelay(request.getUrl(), delay.isPresent() ? delay.get().intValue() : config.getDefaultDelay());
+	    
+	    return Status.scheduled();
 	}
 
 	/**
