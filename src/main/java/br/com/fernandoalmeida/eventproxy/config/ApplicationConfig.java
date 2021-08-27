@@ -12,7 +12,7 @@ public class ApplicationConfig
     private String iftttUrl;
 
     @Value("${app.default.delay}")
-    private Long defaultDelay;
+    private Integer defaultDelay;
 
     @Autowired
     private Environment env;
@@ -22,7 +22,7 @@ public class ApplicationConfig
         return env.getProperty("app." + key + ".url");
     }
 
-    public Long getDefaultDelay()
+    public Integer getDefaultDelay()
     {
         return defaultDelay;
     }

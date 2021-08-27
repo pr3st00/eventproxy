@@ -66,10 +66,10 @@ class EventRestControllerTest
         request.setDelay(Optional.of(10));
 
         ObjectMapper mapper = new ObjectMapper();
-        
+
         // Allows Optional elements to be mapped correctly
         mapper.registerModule(new Jdk8Module());
-        
+
         ObjectWriter writer = mapper.writer();
         String requestBody = writer.writeValueAsString(request);
 

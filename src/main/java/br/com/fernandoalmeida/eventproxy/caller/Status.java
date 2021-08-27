@@ -1,26 +1,20 @@
 package br.com.fernandoalmeida.eventproxy.caller;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 
 @Data
+@Builder
 public class Status
 {
-    private enum Result {
+    public enum Result {
         SCHEDULED, FAILED
     }
 
     @NonNull
     private Result result;
 
-    public static Status scheduled()
-    {
-        return new Status(Result.SCHEDULED);
-    }
-
-    public static Status failed()
-    {
-        return new Status(Result.FAILED);
-    }
-
+    @NonNull
+    private String message;
 }
