@@ -1,11 +1,13 @@
 package br.com.fernandoalmeida.eventproxy.web;
 
+import java.util.Locale;
 import java.util.Optional;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,11 +23,16 @@ import br.com.fernandoalmeida.eventproxy.config.ApplicationConfig;
 @RestController
 public class EventRestController
 {
+    private static final String SUCCESS_SCHEDULED_MESSAGE = "success.scheduled";
+
     @Autowired
     private EventCaller caller;
 
     @Autowired
     private ApplicationConfig config;
+
+    @Autowired
+    private MessageSource messageSource;
 
     /**
      * Calls an event on IFTTT with a delay
@@ -39,11 +46,11 @@ public class EventRestController
      */
     @GetMapping(value = "/callIfttEvent")
     public Status callIftttEvent(@RequestParam("event") @NotBlank String eventName, @RequestParam("key") @NotBlank String key,
-            @RequestParam("delay") Optional<Integer> delay)
+            @RequestParam("delay") Optional<Integer> delay, Locale locale)
     {
         caller.callWithDelay(getEventUrl(eventName, key), delay.isPresent() ? delay.get() : config.getDefaultDelay());
 
-        return scheduled(delay);
+        return scheduled(delay, locale);
     }
 
     /**
@@ -55,21 +62,21 @@ public class EventRestController
      *            Delay in seconds
      */
     @GetMapping(value = "/callEvent")
-    public Status callEvent(@RequestParam("key") @NotBlank String key, @RequestParam("delay") Optional<Integer> delay)
+    public Status callEvent(@RequestParam("key") @NotBlank String key, @RequestParam("delay") Optional<Integer> delay, Locale locale)
     {
         caller.callWithDelay(config.getUrlByKey(key), delay.isPresent() ? delay.get() : config.getDefaultDelay());
 
-        return scheduled(delay);
+        return scheduled(delay, locale);
     }
 
     @PostMapping(value = "/callEvent")
-    public Status callEvent(@RequestBody @Valid Request request)
+    public Status callEvent(@RequestBody @Valid Request request, Locale locale)
     {
         Optional<Integer> delay = request.getDelay();
 
         caller.callWithDelay(request.getUrl(), delay.isPresent() ? delay.get().intValue() : config.getDefaultDelay());
 
-        return scheduled(delay);
+        return scheduled(delay, locale);
     }
 
     /**
@@ -87,11 +94,13 @@ public class EventRestController
         return config.getIftttUrl() + "/trigger/" + eventName + "/with/key/" + key;
     }
 
-    private Status scheduled(Optional<Integer> optionalDelay)
+    private Status scheduled(Optional<Integer> optionalDelay, Locale locale)
     {
         Integer delay = optionalDelay.isPresent() ? optionalDelay.get() : 0;
 
-        return Status.builder().result(Result.SCHEDULED).message("Scheduled for the next " + delay + " (s)").build();
+        String message = messageSource.getMessage(SUCCESS_SCHEDULED_MESSAGE, new Integer[] { delay }, locale);
+
+        return Status.builder().result(Result.SCHEDULED).message(message).build();
     }
 
 }
