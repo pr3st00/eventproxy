@@ -1,18 +1,19 @@
 package br.com.fernandoalmeida.eventproxy.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
-@Configuration
+import lombok.Getter;
+import lombok.Setter;
+
+@Component
+@ConfigurationProperties("app")
 public class ApplicationConfig
 {
-    @Value("${app.ifttt.url}")
-    private String iftttUrl;
-
-    @Value("${app.default.delay}")
-    private Integer defaultDelay;
+    @Getter @Setter private String iftttUrl;
+    @Getter @Setter private Integer defaultDelay;
 
     @Autowired
     private Environment env;
@@ -22,14 +23,5 @@ public class ApplicationConfig
         return env.getProperty("app." + key + ".url");
     }
 
-    public Integer getDefaultDelay()
-    {
-        return defaultDelay;
-    }
-
-    public String getIftttUrl()
-    {
-        return iftttUrl;
-    }
 
 }
