@@ -32,3 +32,4 @@ build/
 
 ## Custom ##
 .env
+update.sh
