@@ -1,15 +1,26 @@
 #!/bin/sh
 
 #
-# Starts the eventproxy container
+# Runs the eventproxy container
 #
 
 CONTAINER_NAME=eventproxy
 
-# Change to match your configuration
+# Defaults. Values from .env file can overwrite those
 DOCKER_USER=pr3st00
-PORT=8081
+SERVER.PORT=8081
+SPRING.USERNAME=admin
+SPRING.PASSWORD=password
 
-docker run --restart always -d -p ${PORT}:${PORT} --name $CONTAINER_NAME ${DOCKER_USER}/eventproxy
+if [[ -f .env ]]; then
+	echo "Loading variables from .env file"
+	. ./.env
+]]
+
+docker run --restart always -d -p ${SERVER.PORT}:${SERVER.PORT} \
+  -e SERVER.PORT=${SERVER.PORT} \
+  -e SPRING.USERNAME=${SPRING.USERNAME} \
+  -e SPRING.PASSWORD=${SPRING.PASSWORD} \
+  --name $CONTAINER_NAME ${DOCKER_USER}/${CONTAINER_NAME}
 
 # EOF
