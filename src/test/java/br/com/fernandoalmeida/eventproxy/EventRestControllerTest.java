@@ -25,10 +25,11 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import br.com.fernandoalmeida.eventproxy.caller.EventCaller;
 import br.com.fernandoalmeida.eventproxy.caller.Request;
 import br.com.fernandoalmeida.eventproxy.config.ApplicationConfig;
+import br.com.fernandoalmeida.eventproxy.web.CustomWebSecurityConfiguration;
 import br.com.fernandoalmeida.eventproxy.web.EventRestController;
 
-@WebMvcTest(controllers = EventRestController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
-@AutoConfigureMockMvc
+@WebMvcTest(controllers = EventRestController.class, excludeAutoConfiguration = { SecurityAutoConfiguration.class, CustomWebSecurityConfiguration.class })
+@AutoConfigureMockMvc(addFilters = false)
 class EventRestControllerTest
 {
     private static final String IFTTT_URL = "https://maker.ifttt.com";
