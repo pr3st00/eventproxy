@@ -26,7 +26,20 @@ function build() {
 
 function run() {
 	echo "[INFO] Running container [${CONTAINER_NAME}]"
-	docker run --restart always -d -p ${SERVER_PORT}:${SERVER_PORT} \
+
+	if [[ ! -z $NETWORK ]]; then
+		echo "..Using network $NETWORK"
+		network_param="--network=$NETWORK"
+	fi
+
+	if [[ ! -z $DNS ]]; then
+		echo "..Using dns $DNS"
+		dns_param="--dns $DNS"
+	fi
+
+	docker run --restart no -d -p ${SERVER_PORT}:${SERVER_PORT} \
+         $network_param \
+         $dns_param \
 	 -e SERVER.PORT=${SERVER_PORT} \
 	 -e SPRING.USERNAME=${SPRING_USERNAME} \
 	 -e SPRING.PASSWORD=${SPRING_PASSWORD} \

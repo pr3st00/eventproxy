@@ -1,6 +1,6 @@
-FROM openjdk:8-jdk-alpine
+FROM arm64v8/eclipse-temurin:17-jre
 
-RUN addgroup -S spring && adduser -S spring -G spring
+RUN addgroup --system spring && adduser --system spring && adduser spring spring
 USER spring:spring
 
 # You might want to remove this for a production environment
