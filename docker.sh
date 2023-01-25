@@ -13,7 +13,6 @@ SERVER_PORT=8081
 SPRING_USERNAME=admin
 SPRING_PASSWORD=password
 
-
 if [[ -f .env ]]; then
         echo "Loading variables from .env file"
         . ./.env
@@ -38,11 +37,11 @@ function run() {
 	fi
 
 	docker run --restart no -d -p ${SERVER_PORT}:${SERVER_PORT} \
-         $network_param \
-         $dns_param \
 	 -e SERVER.PORT=${SERVER_PORT} \
 	 -e SPRING.USERNAME=${SPRING_USERNAME} \
 	 -e SPRING.PASSWORD=${SPRING_PASSWORD} \
+         $network_param \
+         $dns_param \
 	 --name $CONTAINER_NAME ${DOCKER_USER}/${CONTAINER_NAME}
 }
 
