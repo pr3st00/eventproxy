@@ -16,35 +16,29 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Component
 @Slf4j
-public class EventCaller
-{
-    /**
-     * Calls an url
-     *
-     * @param url
-     *            Url
-     */
-    private void call(String url)
-    {
-        String response = new RestTemplate().getForObject(url, String.class);
-        log.info("Response is [{}].", response);
-    }
+public class EventCaller {
+	/**
+	 * Calls an url
+	 *
+	 * @param url Url
+	 */
+	private void call(String url) {
+		String response = new RestTemplate().getForObject(url, String.class);
+		log.info("Response is [{}].", response);
+	}
 
-    /**
-     * Calls an url with a delay.
-     *
-     * @param url
-     *            Url
-     * @param delay
-     *            Delay in seconds
-     */
-    public void callWithDelay(String url, Integer delay)
-    {
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        Runnable task = () -> new EventCaller().call(url);
+	/**
+	 * Calls an url with a delay.
+	 *
+	 * @param url   Url
+	 * @param delay Delay in seconds
+	 */
+	public void callWithDelay(String url, Integer delay) {
+		ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+		Runnable task = () -> new EventCaller().call(url);
 
-        log.info("Scheduling a call to url [{}]" + " after [{}] second(s).", url, delay);
+		log.info("Scheduling a call to url [{}]" + " after [{}] second(s).", url, delay);
 
-        executorService.schedule(task, delay, TimeUnit.SECONDS);
-    }
+		executorService.schedule(task, delay, TimeUnit.SECONDS);
+	}
 }

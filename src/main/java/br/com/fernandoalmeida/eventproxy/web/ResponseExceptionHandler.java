@@ -10,15 +10,13 @@ import br.com.fernandoalmeida.eventproxy.caller.Status;
 import br.com.fernandoalmeida.eventproxy.caller.Status.Result;
 
 @ControllerAdvice
-public class ResponseExceptionHandler extends ResponseEntityExceptionHandler
-{
+public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Status> defaultHandler(Exception e)
-    {
-        Status status = Status.builder().result(Result.FAILED).message(e.getLocalizedMessage()).build();
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<Status> defaultHandler(Exception e) {
+		Status status = Status.builder().result(Result.FAILED).message(e.getLocalizedMessage()).build();
 
-        return new ResponseEntity<>(status, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+		return new ResponseEntity<>(status, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
 }

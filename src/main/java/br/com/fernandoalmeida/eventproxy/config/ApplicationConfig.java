@@ -10,18 +10,19 @@ import lombok.Setter;
 
 @Component
 @ConfigurationProperties("app")
-public class ApplicationConfig
-{
-    @Getter @Setter private String iftttUrl;
-    @Getter @Setter private Integer defaultDelay;
+public class ApplicationConfig {
+	@Getter
+	@Setter
+	private String iftttUrl;
+	@Getter
+	@Setter
+	private Integer defaultDelay;
 
-    @Autowired
-    private Environment env;
+	@Autowired
+	private Environment env;
 
-    public String getUrlByKey(String key)
-    {
-        return env.getProperty("app." + key + ".url");
-    }
-
+	public String getUrlByKey(String key) {
+		return env.getProperty("app." + key + ".url");
+	}
 
 }

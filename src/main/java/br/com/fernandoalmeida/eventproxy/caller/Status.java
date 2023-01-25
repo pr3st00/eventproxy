@@ -6,15 +6,14 @@ import lombok.NonNull;
 
 @Data
 @Builder
-public class Status
-{
-    public enum Result {
-        SCHEDULED, FAILED
-    }
+public class Status {
+	public enum Result {
+		SCHEDULED, FAILED
+	}
 
-    @NonNull
-    private Result result;
+	@NonNull
+	private Result result;
 
-    @NonNull
-    private String message;
+	@NonNull
+	private String message;
 }

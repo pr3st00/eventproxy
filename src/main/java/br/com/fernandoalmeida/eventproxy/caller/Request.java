@@ -9,11 +9,10 @@ import org.hibernate.validator.constraints.URL;
 import lombok.Data;
 
 @Data
-public class Request
-{
-    private Optional<@Digits(fraction = 0, integer = 3) Integer> delay;
+public class Request {
+	private Optional<@Digits(fraction = 0, integer = 3) Integer> delay;
 
-    @URL
-    private String url;
+	@URL
+	private String url;
 
 }
