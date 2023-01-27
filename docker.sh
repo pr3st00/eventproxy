@@ -37,9 +37,9 @@ function run() {
 	fi
 
 	docker run --restart no -d -p ${SERVER_PORT}:${SERVER_PORT} \
-	 -e SERVER.PORT=${SERVER_PORT} \
-	 -e SPRING.USERNAME=${SPRING_USERNAME} \
-	 -e SPRING.PASSWORD=${SPRING_PASSWORD} \
+	 -e SERVER_PORT=${SERVER_PORT} \
+	 -e SPRING_USERNAME=${SPRING_USERNAME} \
+	 -e SPRING_PASSWORD=${SPRING_PASSWORD} \
          $network_param \
          $dns_param \
 	 --name $CONTAINER_NAME ${DOCKER_USER}/${CONTAINER_NAME}
